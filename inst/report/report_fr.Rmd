@@ -1,0 +1,163 @@
+---
+title: \vspace{-2.5cm} Resultats de la mesure du comportement physique
+output: 
+   pdf_document:
+     latex_engine: xelatex
+params:
+  assessor_title: NA
+  assessor_name: NA
+  assessor_surname: NA
+  patient_title: NA
+  patient_name: NA
+  patient_surname: NA
+  sex: NA
+  age: NA
+  weight: NA
+  epoch: NA
+  start_date: NA
+  end_date: NA
+  device: NA
+  position: NA
+  side: NA
+  sampling_rate: NA
+  filter: NA
+  start_day_analysis: NA
+  end_day_analysis: NA
+  axis_weartime: NA
+  frame_size: NA
+  allowanceFrame_size: NA
+  streamFrame_size: NA
+  equation_mets: NA
+  bmr_kcal_d: NA
+  axis_sed: NA
+  axis_mvpa: NA
+  sed_cutpoint: NA
+  mpa_cutpoint: NA
+  vpa_cutpoint: NA
+  minimum_wear_time_for_analysis: NA
+  results_by_day: NA
+  results_summary_means: NA
+  results_summary_medians: NA
+  mvpa_lines: NA
+  sed_lines: NA
+  ratio_lines: NA
+  rendered_by_shiny: FALSE
+  geometry: "left=2cm, right=2cm, top=1cm, bottom=1cm"
+
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, echo = FALSE)
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+
+df1_means <- params$results_summary_means
+df1_medians <- params$results_summary_medians
+df2 <- params$results_by_day
+
+sex <- ifelse(params$sex == "male", "masculin", 
+              ifelse(params$sex == "female", "féminin",
+                     "non défini"))
+position <- ifelse(params$position == "hip", "hanche", 
+              ifelse(params$position == "wrist", "poignet",
+                     ifelse(params$position == "thigh", "cuisse",
+                            ifelse(params$position == "ankle", "cheville", "NA"))))
+
+side <- ifelse(params$side == "right", "droit", 
+              ifelse(params$side == "left", "gauche",
+                     "non défini"))
+
+axis_weartime <- ifelse(params$axis_weartime == "vertical axis", "l'axe vertical", 
+              ifelse(params$axis_weartime == "vector magnitude", "le vecteur magnitude",
+                     "non défini"))
+
+axis_mvpa <- ifelse(params$axis_mvpa == "vertical axis", "axe vertical", 
+              ifelse(params$axis_mvpa == "vector magnitude", "vecteur magnitude",
+                     "non défini"))
+
+options("scipen"=100, "digits"=4)
+```
+
+\vspace{-1cm} 
+
+# Informations
+
+
+**Patient :** `r params$patient_surname` `r params$patient_name`  | **Date :**  `r Sys.Date()` | **Évaluateur :** `r params$assessor_surname` `r params$assessor_name`
+
+**Age :** `r params$age` ans | **Sexe :**  `r sex` | **Masse :** `r params$weight` kg | **Période de mesure :** `r format(params$start_date, "%d/%m/%Y %H:%M:%S")` au `r format(params$end_date, "%d/%m/%Y %H:%M:%S")` | **Estimation du métabolisme de base :** `r format(round(params$bmr_kcal_d, 2), nsmall = 2)` kcal/jour (Estimation à partir des équations de Henry [2005, doi: 10.1079/PHN2005801])
+
+**Appareil :** `r params$device` | **Position :** `r position` | **Côté :** `r side` | **Fréquence d'échantillonnage :** `r params$sampling_rate` Hz | **Filtre :** `r params$filter`
+
+**'Epoch' :** `r params$epoch` s | **Temps de non-port :** Basé sur `r axis_weartime`, intervalle de `r params$frame_size` min avec zéro count pour la détection du temps de non-port, intervalle de `r params$allowanceFrame_size` min avec counts différents de 0 autorisé durant une période de non-port, intervalle de `r params$streamFrame_size` min avec zéro count autour de la période d'activité détectée pour confirmer le non-port | **Équation de prédiction des METs :** `r params$equation_mets` | **Axe utilisé pour catégoriser l'intensité d'activité physique :** `r axis_mvpa` | **Valeurs seuils :** <`r params$sed_cutpoint` counts/min pour SED, $\geqslant$ `r params$mpa_cutpoint` counts/min pour MPA, $\geqslant$ `r params$vpa_cutpoint` counts/min pour VPA
+
+**Période journalière considérée pour compter le temps de port :** de `r params$start_day_analysis` à `r params$end_day_analysis`
+
+**Nombre minimum d'heures avec temps de port pour valider un jour :** `r params$minimum_wear_time_for_analysis` heures
+
+**Abréviations :** SED = sédentaire, LPA =  activité physique légère, MPA = activité physique modérée, VPA = activité physique vigoureuse, MVPA = activité physique modérée à vigoureuse, NAP = niveau d'activité physique
+
+
+# Résultats
+
+```{r }
+create_flextable_summary(df1_means, df1_medians, language = "fr")
+```
+
+
+```{r, fig.height=18, fig.width = 17, warning=FALSE, message=FALSE}
+# PAL
+g_pal <- create_fig_pal(score = df1_means[["pal"]], "fr") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
+
+# Steps
+g_steps <- create_fig_steps(score = df1_means[["total_steps"]], "fr") + theme(plot.margin = margin(0, 1, 0.5, 1, "cm"))
+if (df1_means[["total_steps"]] > 18000) {g_steps <- g_steps + annotate("text", label = "Le score est \nau-delà des limites!", x = 0.25, y = 9000, size = 7, color = "red", fontface = "bold")}
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.5)  # set progress to 50%
+
+# MVPA
+g_mvpa <- create_fig_mvpa(score = df1_means[["minutes_MVPA"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+if (df1_means[["minutes_MVPA"]] > 100) {g_mvpa <- g_mvpa + annotate("text", label = "Le score est \nau-delà des limites!", x = 50, y = 0.5, size = 7, color = "red", fontface = "bold")}
+
+# SED
+g_sed <- create_fig_sed(score = df1_means[["minutes_SED"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+if (df1_means[["minutes_SED"]] > 15*60) {g_sed <- g_sed + annotate("text", label = "Le score est \nau-delà des limites!", x = 7.5, y = 2, size = 7, color = "red", fontface = "bold")}
+
+# MVPA/SED ratio
+g_ratio <- create_fig_ratio_mvpa_sed(score = df1_means[["ratio_mvpa_sed"]], "fr") + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+if (df1_means[["ratio_mvpa_sed"]] > 0.4) {g_ratio <- g_ratio + annotate("text", label = "Le score est \nau-delà des limites!", x = 0.2, y = 0.8, size = 7, color = "red", fontface = "bold")}
+
+# Daily results
+g_all_days <- create_fig_res_by_day(
+  df2, 
+  params$minimum_wear_time_for_analysis, 
+  params$start_day_analysis, 
+  params$end_day_analysis, 
+  language = "fr"
+  ) + theme(plot.margin = margin(0, 1, 0, 1, "cm"))
+
+# Whole figure
+g_pal / g_steps / (g_mvpa | g_sed | g_ratio) /  g_all_days + 
+    plot_layout(heights = c(0.8, 0.7, 1.5, 4)) & theme(legend.justification = "center")
+  
+```
+
+
+# Commentaires
+
+```{r, echo = F}
+# Determining physical activity guidelines status
+guidelines_status <- get_guidelines_status(df1_means[["mets_hours_mvpa"]], language = "fr")
+
+# Determining PAL status
+pal_status <- get_pal_status(df1_means[["pal"]], language = "fr")
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(1)  # set progress to 100%
+```
+
+Selon la *[Food and Agriculture Organization of the United Nations (FAO)](http://www.fao.org/3/y5686e/y5686e.pdf)*, le NAP du patient pourrait être décrit comme **`r pal_status`**. Après avoir fait la conversion des minutes MPA et VPA vers les MET-heures, l'estimation du volume MVPA moyen journalier pour le patient est de `r paste0(format(round(df1_means[["mets_hours_mvpa"]], 1), nsmall = 1))` MET-hr, ce qui pourrait correspondre au fait de tomber **`r guidelines_status`** (i.e., 7.5-15.0 MET-hr par semaine, ou 1.07-2.14 MET-hr par jour).
+
+
