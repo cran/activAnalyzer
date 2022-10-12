@@ -1,6 +1,15 @@
+# activAnalyzer 1.0.5
+
+* Updated the version numbers of the package dependencies.
+* Replaced `as.character()` by `format()` in the `mark_wear_time()` function so that there is no more error when checking for R dev versions.
+* Added the argument `verify_fa = FALSE` to `icon()` functions in the UI to remove an error message that appeared when running the app.
+* Updated the README by indicating the minimum versions to install to use the app.
+* Updated the `mark_intensity()` function: the intensity category numbers associated to the Nonwear, SED, LPA, and MVPA categories (that are present only in the exported marked whole dataset when using the app) were not as expected because they were obtained by converting a factor vector to a numeric vector. Now the conversion is done from a character vector to a numeric vector, which keeps the numerical order as expected. This error had no impact on the results, nor on the figures provided by the package/app. The exported marked dataset has now the corrected intensity category numbers, that is: 0 for Nonwear, 1 for SED, 2 for LPA, and 4 for MVPA.
+
 # activAnalyzer 1.0.4
 
 * Added a block of code into the plot_data_with_intensity() function that was erroneously removed during a previous commit. This block of code allows to show grey bands on the figure with intensity data to indicate what periods will not be considered for analysis.
+* This version has been accepted on CRAN. From now on, future shinyapps.io and desktop versions will be updated after new CRAN releases to keep consistency across the different ways to use the app.
 
 # activAnalyzer 1.0.3
 

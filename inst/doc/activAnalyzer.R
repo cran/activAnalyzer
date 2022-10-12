@@ -7,7 +7,6 @@ knitr::opts_chunk$set(
 ## ----setup--------------------------------------------------------------------
 library(activAnalyzer)
 library(magrittr)
-library(ggplot2)
 
 ## -----------------------------------------------------------------------------
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")

@@ -32,17 +32,16 @@ app_ui <- function(request) {
                 tags$style(".main-header {vertical-align: middle;}"),
                 tags$style(".main-header .logo {vertical-align: middle;}")
         ),
-        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 1.0.4"), titleWidth = 237
+        title = span(img(src="www/favicon.png", width = 30), "activAnalyzer 1.0.5"), titleWidth = 237
                                       ),
       shinydashboardPlus::dashboardSidebar( 
         tags$style(HTML(".sidebar-menu li a {font-size: 17px;}")),
         tags$style(HTML(".main-sidebar{ width: 240px; }")),
         shinydashboard::sidebarMenu(
-          tags$style("@import url(https://use.fontawesome.com/releases/v6.1.0/css/all.css);"),
           id = "tabs",
-          shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = icon("chart-column", verify_fa = FALSE)),
-          shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = icon("file-circle-question", verify_fa = FALSE)),
-          shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("far fa-file-alt"))
+          shinydashboard::menuItem("Accelerometer analysis", tabName = "app", icon = icon("fa-solid fa-chart-column", verify_fa = FALSE)),
+          shinydashboard::menuItem("PROactive questionnaire", tabName = "proactive", icon = icon("fa-solid fa-file-circle-question", verify_fa = FALSE)),
+          shinydashboard::menuItem("User's guide", tabName = "guide", icon = icon("fa-solid fa-file-lines", verify_fa = FALSE))
         )),
       shinydashboard::dashboardBody(
 
