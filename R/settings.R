@@ -2,13 +2,13 @@
 options(shiny.maxRequestSize=100*1024^2)
 
 # Setting lists of inputs
-sex <- c("...", "male", "female", "undefined")
+sex <- c("...", "male", "female", "intersex", "undefined", "prefer not to say")
 device <- c("...", "7164", "GT1M", "GT3X", "GT3X+", "wGT3X+", "wGT3X-BT", "GT9X")
 position <- c("hip", "back")
 side <- c("...", "right", "left")
 filter <- c("...", "normal", "LFE")
 axis_weartime <- c("vector magnitude", "vertical axis")
-metrics <- c("axis1", "axis2", "axis3", "vm", "steps", "inclineStanding", "inclineSitting", "inclineLying")
+metrics <- c("axis1", "axis2", "axis3", "vm", "steps")
 equations <- c("...",
                "Freedson et al. (1998) [Adults]",
                "Santos-Lozano et al. (2013) [Adults]",

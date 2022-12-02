@@ -1,10 +1,27 @@
+# activAnalyzer 1.1.0
+ 
+* Added the `intersex` and `prefer not to say` categories to provide a more inclusive classification of sex. As it seems there is no scientific study about what should be the calculation of resting and activity energy expenditures for intersex people, the values provided for Basal metabolic rate (BMR) and METs are the averages of two values: the value that would be computed for a male, and the value that would be computed for a female. For people reporting `prefer not to say`, computations for females are used by default.
+* Updated in the guide the description of the computation of BMR: "If the patient considers their sex as `undefined` or chooses the `prefer not to say` option, then an equation for females is used. If the patient falls into the `intersex` category, then the average of the results for a male and for a female of the considered age is used (WARNING: At the time of writing this guide, there is no scientific data to justify any calculation for intersex people).".
+* Updated in the guide the description of the computation of METs: "METs, by using the MET equation provided by the user (if the patient considers their sex as `undefined` or chooses the `prefer not to say` option, then equations including sex information, when selected, are used as if the patient were a female; when the `intersex` category is used, an average of the METs related respectively to a male and to a female is used with the equations using sex information; of note, at the time of writing this guide, there is no scientific data to justify any calculation for intersex people);".
+* The `compute_bmr()` and `compute_mets()` functions now use the `dplyr::case_when()` function to determine the appropriate value of BMR and METs, respectively.
+* Corrected typos ("MPVA" -->"MVPA") in the English version of the guide.
+* Added a class "icon-widget" to the sidebar icons to keep control on the appropriate size of the icons.
+* Now the `prepare_dataset()` function imports data using the `read_agd()` function (instead of the `PhysicalActivity::readActigraph()` function). This modification now allows to import data from the GT3X device (previously only data from GT3X+ and newer devices could be used). This was not possible before because the structure of the .agd file obtained with a GT3X device is not accepted by the `PhysicalActivity::readActigraph()` function. 
+* There is no more constraints about the necessity to have inclinometer information in the .agd file. This information is not used anymore in the app.
+* Added a file info message (measurement information) when loading the data file.
+* Changed the `size` arguments of the internal `geom_line()`, `geom_segment()` and `geom_rect()` functions by `linewidth` arguments in relation to the v3.4.0 `{ggplot2}` update.
+* Added the possibility to zoom in on the figures of the app.
+* Added the possibility to provide information about potential relevant physical activity periods that would have modified physical activity level but that could not be recorded due to accelerometer removal.
+* Added an alert message for the figure with steps (cf. report) when the score is beyond the upper limit of the x axis.
+* Corrected a bug: the app crashed when changing age or weight inputs after a data file was loaded. This is now fixed.
+
 # activAnalyzer 1.0.5
 
 * Updated the version numbers of the package dependencies.
 * Replaced `as.character()` by `format()` in the `mark_wear_time()` function so that there is no more error when checking for R dev versions.
 * Added the argument `verify_fa = FALSE` to `icon()` functions in the UI to remove an error message that appeared when running the app.
 * Updated the README by indicating the minimum versions to install to use the app.
-* Updated the `mark_intensity()` function: the intensity category numbers associated to the Nonwear, SED, LPA, and MVPA categories (that are present only in the exported marked whole dataset when using the app) were not as expected because they were obtained by converting a factor vector to a numeric vector. Now the conversion is done from a character vector to a numeric vector, which keeps the numerical order as expected. This error had no impact on the results, nor on the figures provided by the package/app. The exported marked dataset has now the corrected intensity category numbers, that is: 0 for Nonwear, 1 for SED, 2 for LPA, and 4 for MVPA.
+* Updated the `mark_intensity()` function: the intensity category numbers associated to the Nonwear, SED, LPA, and MVPA categories (that are present only in the exported marked whole dataset when using the app) were not as expected because they were obtained by converting a factor vector to a numeric vector. Now the conversion is done from a character vector to a numeric vector, which keeps the numerical order as expected. This error had no impact on the results, nor on the figures provided by the package/app. The exported marked dataset has now the corrected intensity category numbers, that is: 0 for Nonwear, 1 for SED, 2 for LPA, and 3 for MVPA.
 
 # activAnalyzer 1.0.4
 

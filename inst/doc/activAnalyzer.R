@@ -14,20 +14,7 @@ file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 ## ---- warning=FALSE, message=FALSE--------------------------------------------
 mydata <- prepare_dataset(data = file)
 
-## ---- eval = FALSE------------------------------------------------------------
-#  mydata_with_wear_marks <-
-#    mydata %>%
-#    mark_wear_time(
-#      to_epoch = 60,
-#      cts = "vm",
-#      frame = 90,
-#      allowanceFrame = 2,
-#      streamFrame = 30
-#      )
-#  
-#  plot_data(data = mydata_with_wear_marks, metric = "vm")
-
-## ---- message = FALSE, echo = FALSE, fig.width = 7, fig.height = 5, fig.align='center'----
+## ---- message = FALSE, fig.width = 7, fig.height = 5, fig.align = "center"----
 mydata_with_wear_marks <- 
   mydata %>%
   mark_wear_time(
@@ -38,31 +25,9 @@ mydata_with_wear_marks <-
     streamFrame = 30
     )
 
-p <- plot_data(data = mydata_with_wear_marks, metric = "vm")
-#p$theme$plot.background$fill <- "#FEF9E7"
-#p$theme$legend.background$fill <- "#FEF9E7"
-p
+plot_data(data = mydata_with_wear_marks, metric = "vm")
 
-## ---- eval = FALSE------------------------------------------------------------
-#  mydata_with_intensity_marks <-
-#    mark_intensity(
-#       data = mydata_with_wear_marks,
-#       col_axis = "vm",
-#       equation = "Sasaki et al. (2011) [Adults]",
-#       sed_cutpoint = 200,
-#       mpa_cutpoint = 2690,
-#       vpa_cutpoint = 6167,
-#       age = 32,
-#       weight = 67,
-#       sex = "male",
-#      )
-#  
-#  plot_data_with_intensity(
-#    mydata_with_intensity_marks,
-#    metric = "vm"
-#    )
-
-## ---- warning = FALSE, message = FALSE, echo = FALSE, fig.width = 7, fig.height = 5, fig.align='center'----
+## ---- warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = "center"----
 mydata_with_intensity_marks <- 
   mark_intensity(
      data = mydata_with_wear_marks, 
@@ -76,14 +41,7 @@ mydata_with_intensity_marks <-
      sex = "male",
     )
 
-p <- plot_data_with_intensity(
-  mydata_with_intensity_marks,
-  metric = "vm"
-  )
-
-#p$theme$plot.background$fill <- "#FEF9E7"
-#p$theme$legend.background$fill <- "#FEF9E7"
-p
+plot_data_with_intensity(mydata_with_intensity_marks, metric = "vm" )
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  results_by_day <-

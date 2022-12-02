@@ -1,7 +1,7 @@
 Package: activAnalyzer
 Title: A 'Shiny' App to Analyze Accelerometer-Measured Daily Physical
         Behavior Data
-Version: 1.0.5
+Version: 1.1.0
 Authors@R: person('Pierre-Yves', 'de Müllenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'), comment = c(ORCID = "0000-0001-9157-7371"))
 Description: A tool to analyse 'ActiGraph' accelerometer data and to implement 
     the use of the PROactive Physical Activity in COPD (chronic obstructive pulmonary disease) instruments. Once analysis
@@ -12,7 +12,7 @@ Description: A tool to analyse 'ActiGraph' accelerometer data and to implement
     'actigraph.sleepr' package developed by Petkova (2021) <https://github.com/dipetkov/actigraph.sleepr/>.
 License: GPL (>= 3)
 Imports: dbplyr (>= 2.1.1), dplyr (>= 1.0.10), flextable (>= 0.8.2),
-        forcats (>= 0.5.2), ggplot2 (>= 3.3.6), golem (>= 0.3.4), hms
+        forcats (>= 0.5.2), ggplot2 (>= 3.4.0), golem (>= 0.3.4), hms
         (>= 1.1.2), lubridate (>= 1.8.0), magrittr (>= 2.0.3), modelr
         (>= 0.1.9), patchwork (>= 1.1.2), PhysicalActivity, reactable
         (>= 0.3.0), rmarkdown (>= 2.16), RSQLite, shiny (>= 1.7.2),
@@ -32,9 +32,9 @@ Depends: R (>= 3.4.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-10-12 14:22:30 UTC; pydemullenheim
+Packaged: 2022-12-02 10:22:34 UTC; pydemullenheim
 Author: Pierre-Yves de Müllenheim [cre, aut]
     (<https://orcid.org/0000-0001-9157-7371>)
 Maintainer: Pierre-Yves de Müllenheim <pydemull@uco.fr>
 Repository: CRAN
-Date/Publication: 2022-10-12 14:42:42 UTC
+Date/Publication: 2022-12-02 10:40:13 UTC
