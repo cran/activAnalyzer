@@ -108,6 +108,10 @@ total_raw <-
     panel.background = element_rect(fill = "#605ca8", color = "white", size = 10)
   )
 
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.5)  # set progress to 50%
+
+
 diff_rasch <-
   ggplot(data = data.frame(x = 0.1, y = 0.6, label = params$dppac_diff_rasch), aes(x, y, label = paste0(label, " / 100"))) +
   geom_text(size = 17, color = "white", fontface = "bold", hjust = 0) +
@@ -140,7 +144,8 @@ total_rasch <-
   
 (diff_raw | amount_raw | total_raw) / (diff_rasch | amount_rasch | total_rasch)
 
-
+if (params$rendered_by_shiny)
+  shiny::setProgress(1)  # set progress to 100%
 ```
 
 \pagebreak 
