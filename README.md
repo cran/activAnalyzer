@@ -16,7 +16,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 activAnalyzer is a Shiny app that has been developed to analyze daily
 physical behavior data recorded at the hip in adults using an ActiGraph
-accelerometer (.agd files). Once analysis is completed, the app allows
+accelerometer (.agd file from a **GT3X**, **GT3X+**, **wGT3X+** or
+**wGT3X-BT** device). Once analysis is completed, the app allows
 exporting results to .csv files and generating a report of the
 measurement (in either an .html format or a .pdf format). All the
 configured inputs relevant for interpreting the results are recorded in
@@ -74,8 +75,8 @@ There are three different ways to use the activAnalyzer app:
 - On your machine via [R software](https://CRAN.R-project.org/)
   (version: $\ge$ 3.4.0), the [RStudio environment](https://posit.co/)
   (recommended version: Prairie Trillium \[2022.02\]; **Elsbeth Geranium
-  \[2022-12\] does not allow to correctly quit the app from the RStudio
-  window**), and the [activAnalyzer
+  \[2022-12\] and newer releases of RStudio do not allow to correctly
+  quit the app from the RStudio window**), and the [activAnalyzer
   package](https://github.com/pydemull/activAnalyzer) installable from
   CRAN (stable version) or from GitHub (development version). To be able
   to generate a .pdf report, you will have to install the [TinyTeX

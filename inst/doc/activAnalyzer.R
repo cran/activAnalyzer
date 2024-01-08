@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -14,10 +14,10 @@ library(dplyr)
 ## -----------------------------------------------------------------------------
 file <- system.file("extdata", "acc.agd", package = "activAnalyzer")
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------
+## ----warning=FALSE, message=FALSE---------------------------------------------
 mydata <- prepare_dataset(data = file)
 
-## ---- message = FALSE---------------------------------------------------------
+## ----message = FALSE----------------------------------------------------------
 mydata_with_wear_marks <- 
   mydata %>%
   mark_wear_time(
@@ -28,13 +28,13 @@ mydata_with_wear_marks <-
     streamFrame = 30
     )
 
-## ---- include=FALSE-----------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 height_factor <- nlevels(as.factor(mydata_with_wear_marks$date)) * 0.80
 
-## ---- fig.height = height_factor, fig.width=7, fig.align="center"-------------
+## ----fig.height = height_factor, fig.width=7, fig.align="center"--------------
 plot_data(data = mydata_with_wear_marks, metric = "vm")
 
-## ---- fig.height = height_factor, fig.width=7, fig.align="center"-------------
+## ----fig.height = height_factor, fig.width=7, fig.align="center"--------------
 plot_data(
   data = mydata_with_wear_marks, 
   metric = "vm",
@@ -42,7 +42,7 @@ plot_data(
   zoom_to = "18:00:00"
   )
 
-## ---- warning = FALSE, message = FALSE----------------------------------------
+## ----warning = FALSE, message = FALSE-----------------------------------------
 mydata_with_intensity_marks <- 
   mark_intensity(
      data = mydata_with_wear_marks, 
@@ -56,7 +56,7 @@ mydata_with_intensity_marks <-
      sex = "male"
     )
 
-## ---- fig.height = height_factor, fig.width=7, fig.align="center"-------------
+## ----fig.height = height_factor, fig.width=7, fig.align="center"--------------
 plot_data_with_intensity(
   mydata_with_intensity_marks, 
   metric = "vm",
@@ -64,7 +64,7 @@ plot_data_with_intensity(
   valid_wear_time_end = "23:59:59"
   )
 
-## ---- fig.height = height_factor, fig.width=7, fig.align="center"-------------
+## ----fig.height = height_factor, fig.width=7, fig.align="center"--------------
 plot_data_with_intensity(
   mydata_with_intensity_marks, 
   metric = "vm",
@@ -72,7 +72,7 @@ plot_data_with_intensity(
   valid_wear_time_end = "22:00:00"
   )
 
-## ---- fig.height = height_factor, fig.width=7, fig.align="center"-------------
+## ----fig.height = height_factor, fig.width=7, fig.align="center"--------------
 plot_data_with_intensity(
   mydata_with_intensity_marks, 
   metric = "vm",
@@ -80,7 +80,7 @@ plot_data_with_intensity(
   zoom_to = "16:30:00"
   )
 
-## ---- message = FALSE---------------------------------------------------------
+## ----message = FALSE----------------------------------------------------------
 results_by_day <-
   mydata_with_intensity_marks %>%
   recap_by_day(
@@ -94,7 +94,7 @@ results_by_day <-
     bin_width = 500
     )
 
-## ---- eval--------------------------------------------------------------------
+## ----eval---------------------------------------------------------------------
 mean_results <-
   results_by_day$df_all_metrics  %>%
   average_results(minimum_wear_time = 10, fun = "mean")
@@ -109,7 +109,7 @@ results_by_day$df_all_metrics %>%
   dplyr::select(date:total_steps) %>%
   reactable::reactable(striped = TRUE, defaultColDef = reactable::colDef(align = "center", minWidth = 180))
 
-## ---- fig.height=10, fig.width = 17, warning=FALSE, message=FALSE-------------
+## ----fig.height=10, fig.width = 17, warning=FALSE, message=FALSE--------------
 create_fig_res_by_day(
   results_by_day$df_all_metrics, 
   minimum_wear_time_for_analysis = 10, 
@@ -127,7 +127,7 @@ create_flextable_summary(
   epoch_label = "60s"
   )
 
-## ---- fig.height=9, fig.width = 17, warning=FALSE, message=FALSE--------------
+## ----fig.height=9, fig.width = 17, warning=FALSE, message=FALSE---------------
 # PAL
 g_pal <- create_fig_pal(score = mean_results[["pal"]], "en") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
   
@@ -152,7 +152,7 @@ results_by_day$df_all_metrics %>%
   dplyr::select(date, max_steps_60min:peak_steps_1min) %>%
   reactable::reactable(striped = TRUE, defaultColDef = reactable::colDef(align = "center", minWidth = 180))
 
-## ---- fig.height=7, fig.width = 17, warning=FALSE, message=FALSE--------------
+## ----fig.height=7, fig.width = 17, warning=FALSE, message=FALSE---------------
 create_fig_res_by_day(
   results_by_day$df_all_metrics, 
   minimum_wear_time_for_analysis = 10, 
@@ -170,10 +170,10 @@ create_flextable_summary(
   epoch_label = "60s"
   )
 
-## ---- fig.width = 15, fig.height = 10-----------------------------------------
+## ----fig.width = 15, fig.height = 10------------------------------------------
   results_by_day$p_band
 
-## ---- fig.width = 15, fig.height = 10, message = FALSE------------------------
+## ----fig.width = 15, fig.height = 10, message = FALSE-------------------------
   results_by_day$p_log
 
 ## -----------------------------------------------------------------------------
@@ -181,13 +181,13 @@ results_by_day$df_all_metrics %>%
   dplyr::select(date, ig:M5) %>%
   reactable::reactable(striped = TRUE, defaultColDef = reactable::colDef(align = "center", minWidth = 180))
 
-## ---- fig.height=7, fig.width = 17, warning=FALSE, message=FALSE--------------
+## ----fig.height=7, fig.width = 17, warning=FALSE, message=FALSE---------------
 create_fig_res_by_day(
   results_by_day$df_all_metrics, 
   minimum_wear_time_for_analysis = 10, 
   start_day_analysis = "00:00:00", 
   end_day_analysis = "23:59:00", 
-  metrics = "step_acc",
+  metrics = "int_distri",
   epoch_label = "60s"
   ) + theme(plot.margin = margin(1, 1, 1, 1, "cm"))
 
@@ -199,7 +199,7 @@ create_flextable_summary(
   epoch_label = "60s"
   )
 
-## ---- fig.align = "center", out.width='50%', out.height='50%', fig.width=8, fig.height=8----
+## ----fig.align = "center", out.width='50%', out.height='50%', fig.width=8, fig.height=8----
 create_fig_mx_summary(
 data = mean_results,
 labels = NULL,
@@ -215,10 +215,10 @@ accum_metrics_sed <-
     dates = c("2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10", "2021-04-11")
     )
 
-## ---- fig.height = height_factor/0.75*0.85, fig.width=7, fig.align="center"----
+## ----fig.height = height_factor/0.75*0.85, fig.width=7, fig.align="center"----
 accum_metrics_sed$p_breaks
 
-## ---- out.width='100%', out.height='60%', fig.height=11, fig.width=11, fig.align="center"----
+## ----out.width='100%', out.height='60%', fig.height=11, fig.width=11, fig.align="center"----
 p1 <- accum_metrics_sed$p_alpha  + guides(color = "none", fill = "none")
 p2 <- accum_metrics_sed$p_MBD    + guides(color = "none", fill = "none")
 p3 <- accum_metrics_sed$p_UBD
@@ -234,10 +234,10 @@ accum_metrics_pa <-
     dates = c("2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10", "2021-04-11")
     )
 
-## ---- fig.height = height_factor/0.75*0.85, fig.width=7, fig.align="center"----
+## ----fig.height = height_factor/0.75*0.85, fig.width=7, fig.align="center"----
 accum_metrics_pa$p_breaks
 
-## ---- out.width='100%', out.height='60%', fig.height=11, fig.width=11, fig.align="center"----
+## ----out.width='100%', out.height='60%', fig.height=11, fig.width=11, fig.align="center"----
 p1 <- accum_metrics_pa$p_alpha  + guides(color = "none", fill = "none")
 p2 <- accum_metrics_pa$p_MBD    + guides(color = "none", fill = "none")
 p3 <- accum_metrics_pa$p_UBD
