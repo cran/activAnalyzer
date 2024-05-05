@@ -1,7 +1,7 @@
 Package: activAnalyzer
 Title: A 'Shiny' App to Analyze Accelerometer-Measured Daily Physical
         Behavior Data
-Version: 2.1.0
+Version: 2.1.1
 Authors@R: person('Pierre-Yves', 'de Müllenheim', email = 'pydemull@uco.fr', role = c('cre', 'aut'), comment = c(ORCID = "0000-0001-9157-7371"))
 Description: A tool to analyse 'ActiGraph' accelerometer data and to implement 
     the use of the PROactive Physical Activity in COPD (chronic obstructive pulmonary disease) instruments. Once analysis
@@ -27,15 +27,15 @@ URL: https://pydemull.github.io/activAnalyzer/,
 BugReports: https://github.com/pydemull/activAnalyzer/issues
 Suggests: covr, knitr, spelling, testthat (>= 3.0.0), processx,
         globals, config, tidyselect, DBI, htmltools, officer, pkgload,
-        scales, tibble, rlang, tinytex, shinytest2
+        scales, tibble, rlang, tinytex, shinytest2, pkgdown, callr
 Language: en-US
 Depends: R (>= 3.4.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-04-26 21:37:38 UTC; pydemullenheim
+Packaged: 2024-05-05 22:16:22 UTC; pydemullenheim
 Author: Pierre-Yves de Müllenheim [cre, aut]
     (<https://orcid.org/0000-0001-9157-7371>)
 Maintainer: Pierre-Yves de Müllenheim <pydemull@uco.fr>
 Repository: CRAN
-Date/Publication: 2024-04-26 21:50:02 UTC
+Date/Publication: 2024-05-05 22:40:03 UTC
