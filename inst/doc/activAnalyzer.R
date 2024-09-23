@@ -127,7 +127,7 @@ create_flextable_summary(
   epoch_label = "60s"
   )
 
-## ----fig.height=9, fig.width = 17, warning=FALSE, message=FALSE---------------
+## ----fig.height=9, fig.width = 17, warning=FALSE, message=FALSE, fig.align="center"----
 # PAL
 g_pal <- create_fig_pal(score = mean_results[["pal"]], "en") + theme(plot.margin = margin(2, 1, 0.5, 1, "cm"))
   
@@ -144,7 +144,7 @@ g_sed <- create_fig_sed(score = mean_results[["minutes_SED"]], "en") + theme(plo
 g_ratio <- create_fig_ratio_mvpa_sed(score = mean_results[["ratio_mvpa_sed"]], "en") + theme(plot.margin = margin(0, 1, 1, 1, "cm"))
 
 # Whole figure
-g_pal / g_steps / (g_mvpa | g_sed | g_ratio) + 
+(g_pal + theme(legend.position = "top")) / g_steps / (g_mvpa | g_sed | g_ratio) + 
     plot_layout(heights = c(0.8, 0.7, 1.5)) & theme(legend.justification = "center")
 
 ## -----------------------------------------------------------------------------
